@@ -28,7 +28,7 @@ public class Kort implements Comparable<Kort> {
 	/**
 	 * Gir fargen på kortet.
 	 * 
-	 * @return fargen
+	 * @return fargen		
 	 */
 	public Kortfarge getFarge() {
 		return farge;

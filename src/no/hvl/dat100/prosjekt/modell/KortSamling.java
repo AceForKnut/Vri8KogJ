@@ -13,19 +13,15 @@ import no.hvl.dat100.prosjekt.kontroll.dommer.Regler;
 public class KortSamling {
 
 	private final int MAKS_KORT = 4 * Regler.MAKS_KORT_FARGE;
-
 	private Kort[] samling;
 	private int antall;
-
 	/**
 	 * Oppretter en tom Kortsamling med plass til MAKS_KORT (hele kortstokken).
 	 */
 	public KortSamling() {
 		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.constructor("KortSamling"));
-		// TODO - END
+		samling = new Kort[MAKS_KORT];
+		antall = 0;
 	}
 
 	/**
@@ -38,10 +34,30 @@ public class KortSamling {
 	 * @return tabell av kort.
 	 */
 	public Kort[] getSamling() {
-		
+//	    for (int i = 0; i < samling.length; i++) {
+//	        int minsteVerd = i;
+//
+//	   
+//	        if (samling[i] == null) {
+//	            continue;
+//	        }
+//
+//	        for (int k = 0; k < samling.length; k++) {
+//	         
+//	            if (samling[k] != null && samling[k].compareTo(samling[minsteVerd]) < 0) {
+//	                minsteVerd = k;
+//	            }
+//	        }
+//
+//	        Kort temp = samling[i];
+//	        samling[i] = samling[minsteVerd];
+//	        samling[minsteVerd] = temp;
+//	    }
+//	    return samling;
+//	}
 		return samling;
-		
 	}
+
 	
 	/**
 	 * Antall kort i samlingen.
@@ -50,11 +66,7 @@ public class KortSamling {
 	 */
 	public int getAntalKort() {
 		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+		return antall;
 	}
 	
 	/**
@@ -63,12 +75,7 @@ public class KortSamling {
 	 * @return true om samlinga er tom, false ellers.
 	 */
 	public boolean erTom() {
-		
-		// TODO - START
-				
-		throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+			return (antall == 0);
 	}
 
 	/**
@@ -79,10 +86,8 @@ public class KortSamling {
 	 */
 	public void leggTil(Kort kort) {
 		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		// TODO - END
+			samling[antall] = kort;
+		    antall++;
 		
 	}
 	
@@ -92,22 +97,23 @@ public class KortSamling {
 	 */
 	public void leggTilAlle() {
 		
-		// TODO - START
-		// Husk: bruk Regler.MAKS_KORT_FARGE for å få antall kort per farge
-		
-		throw new UnsupportedOperationException(TODO.method());
-		// TODO - END
+	    for (Kortfarge farge : Kortfarge.values()) {
+	        for (int verdi = 1; verdi <= Regler.MAKS_KORT_FARGE; verdi++) {
+	            Kort kort = new Kort(farge, verdi);
+	            leggTil(kort);
+	        }
+	    }
 	}
+
 
 	/**
 	 * Fjerner alle korta fra samlinga slik at den blir tom.
 	 */
 	public void fjernAlle() {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		// TODO - END
+		for (int i = antall - 1; i >= 0; i--) {
+			samling[i] = null;
+			antall--;
+		}
 	}
 	
 	/**
@@ -117,13 +123,10 @@ public class KortSamling {
 	 *         null.
 	 */
 	public Kort seSiste() {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - END
-		
+		if (antall == 0) {
+			return null;
+		}
+		return samling[antall - 1];
 	}
 
 	/**
@@ -132,14 +135,35 @@ public class KortSamling {
 	 * @return siste kortet i samlinga. Dersom samalinga er tom, returneres
 	 *         null.
 	 */
-	public Kort taSiste() {
+//	public Kort taSiste() {
+//	    if (antall == 0) {
+//	        return null; // Return null if the collection is empty
+//	    }
+//	    
+//	    int sistePos = antall - 1; // Calculate the index of the last card
+//	    
+//	    Kort taSisteKort = samling[sistePos]; // Get the last card
+//	    samling[sistePos] = null; // Set the last position to null to remove the card
+//	    antall--; // Decrement the count of cards in the collection
+//	    
+//	    return taSisteKort; // Return the removed card
+//	}
+public Kort taSiste() {
 		
-		// TODO - START
+		Kort siste = null;
+		if (antall !=0)	{
+			siste = samling [antall - 1];
+			samling[antall - 1] = null;
+			antall--;
+			return siste;
+		}
+		return siste;
 		
-		throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+//		throw new RuntimeException("Metode taSiste ikke implementert");
 	}
+	
+
+
 	
 	/**
 	 * Undersøker om et kort finst i samlinga.
@@ -149,13 +173,15 @@ public class KortSamling {
 	 * @return true om kortet finst i samlinga, false ellers.
 	 */
 	public boolean har(Kort kort) {
+		int i = 0;
 		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		// return false;
-		// TODO - END
-		
+		boolean funnet = false;
+		while (!funnet && i<antall) {
+			if(samling[i] == kort) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -169,12 +195,20 @@ public class KortSamling {
 	 */
 			 
 	public boolean fjern(Kort kort) {
+		boolean fjernet = false;
+		int i = 0;
+		while (!fjernet && i<antall) {
+			if (samling[i].equals(kort)) {
+				samling[i] = samling[antall - 1];
+				fjernet = true;
+				antall--;
+			} else {
+				i++;
+			}
+		}
 		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
+		return fjernet;
 
-		// TODO - END
 	}
 
 	/**
@@ -184,13 +218,12 @@ public class KortSamling {
 	 *         som i kortsamlinga.
 	 */
 	public Kort[] getAllekort() {
+		Kort[] kort = new Kort[antall];
+		for (int i = 0; i < antall; i++) {
+		kort[i] = samling[i];
+		}
 		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - END
-	
+		return kort;
 	}
 	
 }
