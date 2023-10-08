@@ -86,9 +86,10 @@ public class KortSamling {
 	 */
 	public void leggTil(Kort kort) {
 		
+		if (antall <= MAKS_KORT && kort != null) {
 			samling[antall] = kort;
-		    antall++;
-		
+			antall++;
+		}
 	}
 	
 	/**
@@ -99,12 +100,13 @@ public class KortSamling {
 		
 	    for (Kortfarge farge : Kortfarge.values()) {
 	        for (int verdi = 1; verdi <= Regler.MAKS_KORT_FARGE; verdi++) {
-	            Kort kort = new Kort(farge, verdi);
-	            leggTil(kort);
+	        	Kort kort = new Kort(farge, verdi);
+	        	leggTil(kort);
+	  
 	        }
 	    }
-	}
 
+	}
 
 	/**
 	 * Fjerner alle korta fra samlinga slik at den blir tom.
@@ -173,15 +175,27 @@ public Kort taSiste() {
 	 * @return true om kortet finst i samlinga, false ellers.
 	 */
 	public boolean har(Kort kort) {
-		int i = 0;
-		
-		boolean funnet = false;
-		while (!funnet && i<antall) {
-			if(samling[i] == kort) {
-				return true;
-			}
+//		int i = 0;
+//		
+//		boolean funnet = false;
+//		while (!funnet && i<antall) {
+//			if(samling[i] == kort) {
+//				return true;
+//			}
+//			i++;
+//		}
+//		return false;
+		boolean finnes = false;
+		if (kort == null || antall == 0) {
+			return false;
 		}
-		return false;
+		for (int i = 0; i < antall; i++) {
+			if (kort.lik(samling[i])) {
+				finnes = true;
+			}
+
+		}
+		return finnes;
 	}
 
 	/**
@@ -196,20 +210,33 @@ public Kort taSiste() {
 			 
 	public boolean fjern(Kort kort) {
 		boolean fjernet = false;
-		int i = 0;
-		while (!fjernet && i<antall) {
-			if (samling[i].equals(kort)) {
-				samling[i] = samling[antall - 1];
-				fjernet = true;
-				antall--;
-			} else {
-				i++;
+
+		if (kort == null || antall == 0) {
+			return fjernet;
+		}
+		int indeks = -1;
+		
+		for (int i = 0; i<antall; i++) {
+			if (kort.lik(samling[i])) {
+				indeks = i;
+				break;
 			}
 		}
+			if (indeks != -1) {
+				for (int k = indeks; k < antall - 1; k++) {
+					samling[k] = samling[k + 1];
+				}
+				samling[antall - 1] = null;
+				fjernet = true;
+				antall--;
+			}
 		
-		return fjernet;
+			return fjernet;
+		}
+		
+		
 
-	}
+
 
 	/**
 	 * Gir kortene som en tabell av samme lengde som antall kort i samlingen
