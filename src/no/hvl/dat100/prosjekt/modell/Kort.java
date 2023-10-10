@@ -156,7 +156,7 @@ public class Kort implements Comparable<Kort> {
 		} else {
 			return this.verdi - kort.verdi;
 		}
-		
+			
 	}
 
 	@Override
