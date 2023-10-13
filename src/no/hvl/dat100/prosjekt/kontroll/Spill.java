@@ -6,9 +6,11 @@ import no.hvl.dat100.prosjekt.modell.KortSamling;
 import no.hvl.dat100.prosjekt.TODO;
 import no.hvl.dat100.prosjekt.kontroll.dommer.Regler;
 import no.hvl.dat100.prosjekt.kontroll.spill.Handling;
+import no.hvl.dat100.prosjekt.kontroll.spill.HandlingsType;
 import no.hvl.dat100.prosjekt.kontroll.spill.Spillere;
 import no.hvl.dat100.prosjekt.modell.Kort;
 import no.hvl.dat100.prosjekt.modell.KortUtils;
+import no.hvl.dat100.prosjekt.modell.Kortfarge;
 
 /**
  * Klassen har objektvariaber som er referanser til de spillerne, nord og syd
@@ -107,8 +109,22 @@ public class Spill {
 	 * @return kortet som trekkes.
 	 */
 	public Kort trekkFraBunke(ISpiller spiller) {
-
 		
+		Kort trukketKort = null;
+		
+		if (bord.bunkefraTom()) {
+			bord.snuTilBunken();
+			trukketKort = bord.getBunkeFra().taSiste();
+			spiller.leggTilKort(trukketKort);
+			spiller.getAntallTrekk();
+			spiller.setAntallTrekk(+1);
+			} else {
+				trukketKort = bord.getBunkeFra().taSiste();
+				spiller.leggTilKort(trukketKort);
+				spiller.getAntallTrekk();
+				spiller.setAntallTrekk(+1);
+			}
+			return trukketKort;
 	}
 
 	/**
@@ -121,12 +137,24 @@ public class Spill {
 	 */
 	public Handling nesteHandling(ISpiller spiller) {
 		
-		// TODO - START
-		// Hint: se på hvilke metoder som er tilgjengelig på en spiller
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - END
 		
+		HandlingsType type = null;
+	    Kort trukketKort = null;
+	    KortSamling spillerKort = spiller.getHand();
+
+	    if (spiller.erFerdig()) {
+	        type = HandlingsType.LEGGNED;
+	        trukketKort = spillerKort.taSiste();/* some logic to pick a card to lay down, or null */;
+	    } else if (spillerKort.erTom()) {
+	        type = HandlingsType.FORBI;
+	    } else {
+	        type = HandlingsType.TREKK;
+	        trukketKort = trekkFraBunke(spiller);
+	    }
+
+	    return new Handling(type, trukketKort);
+
+//		// Hint: se på hvilke metoder som er tilgjengelig på en spiller
 	}
 
 	/**
@@ -143,11 +171,16 @@ public class Spill {
 	 */
 	public boolean leggnedKort(ISpiller spiller, Kort kort) {
 		
-		// TODO - START
+		boolean harKort = true;
+		if(spiller.getHand().har(kort) ) {
+			bord.leggNedBunkeTil(kort);
+			spiller.getHand().fjern(kort);
+			
+			return harKort;
+		} else {
+			return false;
+		}
 		
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - END
 	}
 
 	/**
@@ -158,12 +191,7 @@ public class Spill {
 	 *            spilleren som er i tur.
 	 */
 	public void forbiSpiller(ISpiller spiller) {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-	
-		// TODO - END
+		spiller.setAntallTrekk(0);
 	}
 
 	/**
@@ -180,15 +208,29 @@ public class Spill {
 	public Kort utforHandling(ISpiller spiller, Handling handling) {
 
 		// TODO - START
+		
 		Kort kort = null;
-
+//		HandlingsType type = handling.getType();
+//		
+//		switch(type) {
+//		case TREKK:
+//			kort = trekkFraBunke(spiller);
+//			break;
+//		case LEGGNED:
+//			kort = handling.getKort();
+//			spiller.getHand().fjern(kort);
+//			break;
+//		case FORBI:
+//			break;
+//			default:
+//				//??
+//				break;
+//		}
+		
+		return kort;
 		// Hint: del opp i de tre mulige handlinger og vurder 
 		// om noen andre private metoder i klassen kan brukes
 		// til å implementere denne metoden
-				
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - END
 	}
 
 }

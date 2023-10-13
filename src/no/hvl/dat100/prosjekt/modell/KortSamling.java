@@ -34,27 +34,8 @@ public class KortSamling {
 	 * @return tabell av kort.
 	 */
 	public Kort[] getSamling() {
-//	    for (int i = 0; i < samling.length; i++) {
-//	        int minsteVerd = i;
-//
-//	   
-//	        if (samling[i] == null) {
-//	            continue;
-//	        }
-//
-//	        for (int k = 0; k < samling.length; k++) {
-//	         
-//	            if (samling[k] != null && samling[k].compareTo(samling[minsteVerd]) < 0) {
-//	                minsteVerd = k;
-//	            }
-//	        }
-//
-//	        Kort temp = samling[i];
-//	        samling[i] = samling[minsteVerd];
-//	        samling[minsteVerd] = temp;
-//	    }
-//	    return samling;
-//	}
+
+
 		return samling;
 	}
 
@@ -175,16 +156,6 @@ public Kort taSiste() {
 	 * @return true om kortet finst i samlinga, false ellers.
 	 */
 	public boolean har(Kort kort) {
-//		int i = 0;
-//		
-//		boolean funnet = false;
-//		while (!funnet && i<antall) {
-//			if(samling[i] == kort) {
-//				return true;
-//			}
-//			i++;
-//		}
-//		return false;
 		boolean finnes = false;
 		if (kort == null || antall == 0) {
 			return false;
