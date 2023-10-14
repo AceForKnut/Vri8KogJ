@@ -137,22 +137,24 @@ public class Spill {
 	 */
 	public Handling nesteHandling(ISpiller spiller) {
 		
+		return spiller.nesteHandling(spiller.getHand().taSiste());
 		
-		HandlingsType type = null;
-	    Kort trukketKort = null;
-	    KortSamling spillerKort = spiller.getHand();
-
-	    if (spiller.erFerdig()) {
-	        type = HandlingsType.LEGGNED;
-	        trukketKort = spillerKort.taSiste();/* some logic to pick a card to lay down, or null */;
-	    } else if (spillerKort.erTom()) {
-	        type = HandlingsType.FORBI;
-	    } else {
-	        type = HandlingsType.TREKK;
-	        trukketKort = trekkFraBunke(spiller);
-	    }
-
-	    return new Handling(type, trukketKort);
+//		HandlingsType type = null;
+//	    Kort trukketKort = null;
+//	    KortSamling spillerKort = spiller.getHand();
+//
+//	    if (spiller.erFerdig()) {
+//	        type = HandlingsType.LEGGNED;
+//	        trukketKort = spillerKort.taSiste();
+//	    } else if (spillerKort.erTom()) {						kanskje unødvendig kode lmao
+//	    	type = HandlingsType.TREKK;
+//	        trukketKort = trekkFraBunke(spiller);
+//	    } else {
+//	    	type = HandlingsType.FORBI;
+//	        
+//	    }
+//
+//	    return new Handling(type, trukketKort);
 
 //		// Hint: se på hvilke metoder som er tilgjengelig på en spiller
 	}
@@ -206,12 +208,20 @@ public class Spill {
 	 * @return kort som trekkes, kort som spilles eller null ved forbi.
 	 */
 	public Kort utforHandling(ISpiller spiller, Handling handling) {
-
-		// TODO - START
 		
-		Kort kort = null;
+		Kort kort = handling.getKort();
+		if(handling.getType() == HandlingsType.LEGGNED) {
+			leggnedKort(spiller, handling.getKort());
+			return kort;
+		} else if (handling.getType() == HandlingsType.TREKK){
+			return trekkFraBunke(spiller);
+		} else {
+			forbiSpiller(spiller);
+			return null;
+		}
+
 //		HandlingsType type = handling.getType();
-//		
+//		 
 //		switch(type) {
 //		case TREKK:
 //			kort = trekkFraBunke(spiller);
@@ -226,8 +236,8 @@ public class Spill {
 //				//??
 //				break;
 //		}
-		
-		return kort;
+//		
+//		return kort;
 		// Hint: del opp i de tre mulige handlinger og vurder 
 		// om noen andre private metoder i klassen kan brukes
 		// til å implementere denne metoden
