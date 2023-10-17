@@ -34,14 +34,29 @@ public class SydSpiller extends Spiller {
 	 * @param topp
 	 *            kort som ligg øverst på til-bunken.
 	 */
-	@Override
-	public Handling nesteHandling(Kort topp) {
 
-		// TODO - START
-		/* first-fit strategi */
-	
-		throw new UnsupportedOperationException(TODO.method());
-	
-		// TODO - END
+	public Handling nesteHandling(Kort topp) {
+	    // Hent kortene spilleren har på hånden
+	    Kort[] hand = getHand().getAllekort();
+
+	    // Gå gjennom kortene og finn det første lovlige kortet
+	    for (Kort kort : hand) {
+	        if (Regler.kanLeggeNed(kort, topp)) {
+	            return new Handling(HandlingsType.LEGGNED, kort);
+	        }
+	    }
+
+	    // Hvis det ikke er noen lovlige kort å spille, og antall trekk er mindre enn maks, trekk et kort
+	    if (getAntallTrekk() < Regler.maksTrekk()) {
+	        return new Handling(HandlingsType.TREKK, null);
+	    }
+
+	    // Hvis spilleren har trukket maks antall ganger, si forbi
+	    return new Handling(HandlingsType.FORBI, null);
 	}
-}
+
+
+
+
+	}
+

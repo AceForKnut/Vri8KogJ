@@ -27,10 +27,7 @@ public class Bord {
 		
 		bunkeFra.leggTilAlle();
 		
-//		// TODO - START
-//		
-//		throw new UnsupportedOperationException(TODO.constructor("Bord"));
-//		// TODO - END
+
 	}
 	
 	/**
@@ -66,11 +63,7 @@ public class Bord {
 		
 	}
 			
-//		// TODO - START
-//				
-//		throw new UnsupportedOperationException(TODO.method());
-//
-//		// TODO - END
+
 	
 
 	/**
@@ -166,10 +159,7 @@ public class Bord {
 		//Så bruker vi fjernAlle på resten av bunkeTil
 		//Så stokk lmao
 		//bunkeTil -> bunkeFra
-//		// TODO - START
-//		
-//		throw new UnsupportedOperationException(TODO.method());
-//		// TODO - END
+
 	}
 		
 	/**
@@ -183,10 +173,6 @@ public class Bord {
 		
 		
 		bunkeTil.leggTil(k);
-//		// TODO - START
-//		
-//		throw new UnsupportedOperationException(TODO.method());
-//		// TODO - END
-				
+
 	}
 }
